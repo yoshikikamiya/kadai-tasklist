@@ -3,16 +3,13 @@ class TasksController < ApplicationController
     
     def index
         @tasks = Task.order(id: :desc).page(params[:page]).per(3)
-    
     end
     
     def show
-        
     end
     
     def new
         @task = Task.new
-        
     end
     
     def create
@@ -29,7 +26,6 @@ class TasksController < ApplicationController
     end
     
     def edit
-        
     end
     
     def update
@@ -50,7 +46,6 @@ class TasksController < ApplicationController
         flash[:success] = 'タスクは正常に削除されました。'
         redirect_to tasks_url
 
-        
     end
     
     
