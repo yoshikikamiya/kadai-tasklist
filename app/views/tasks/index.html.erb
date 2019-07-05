@@ -1,24 +1,27 @@
-<% if logged_in? %>
-<div class="row">
-  <aside class="col-sm-4">
-    <%= form_with(model: @task,local:true)do|f| %>
-    <div class="form-group">
-      <%= f.text_area :content, class:'form-control',row:5 %>
-    </div>
-    <%= f.submit 'Post',class: 'btn btn-primary btn-block' %>
-    <% end %>
-  </aside>
-  <div class="col-sm-8">
-    <%= render 'tasks/tasks',tasks:@tasks %>
-  </div>
-</div>
+<h1>タスク一覧</h1>
 
-<p>ログイン完了ユーザ：<%= current_user.name %></p>
-<% else %>
-<div class="center jumbotron">
-  <div class="text-center">
-    <h1>Welcome to the TaskList</h1>
-    <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
-  </div>
+<% if @tasks.any? %>
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>ステータス</th>
+            <th>タスク</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @tasks.each do |task| %>
+        <tr>
+            <td><%= link_to task.id, task %></td>
+            <td><%= task.status %></td>
+            <td><%= task.content %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<div>
+<%= paginate @tasks %>
 </div>
 <% end %>
+<%= link_to '新規タスクの登録',new_task_path, class: "btn btn-primary" %>
