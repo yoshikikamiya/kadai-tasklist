@@ -1,23 +1,18 @@
 Rails.application.routes.draw do
- 
+    resources :tasks
+
     root to:'tasks#index'
     
-     resources :tasks
-    
+     
+     get 'login', to: 'sessions#new'
+     post 'login', to: 'sessions#create'
+     delete 'logout',to:'sessions#destroy'
+     
+     
 
     
-    
     get 'signup', to: 'users#new'
-    resources :users, only:[:index,:show,:new,:create] do
-        member do
-            get :followings
-            get:followers
-        end
-        collection do
-            get :search
-        end
-    end 
+    resources :users, only:[:index,:show,:new,:create] 
     
-    resources :tasks, only: [:create, :destroy]
-    resources:relationships,only:[:create,:destroy]
+    resources :users,only:[:create,:destroy]
 end
