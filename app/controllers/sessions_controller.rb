@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_user_logged_in
+  
   def new
   end
 
@@ -15,7 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] - nil
+    session[:user_id] = nil
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end
@@ -23,6 +25,12 @@ class SessionsController < ApplicationController
 
 
 private
+  def correct_user
+    @task = current_user.tasks.find_by(id:params[:id])
+    unless @task
+    redirect_to root_url
+    end
+  end
 
 def login(email,password)
   @user=User.find_by(email: email)
