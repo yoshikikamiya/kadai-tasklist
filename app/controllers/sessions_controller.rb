@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :require_user_logged_in
+  
   
   def new
   end
@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     password = params[:session][:password]
     if login(email,password)
       flash[:success] = 'ログインに成功しました。'
-      redirect_to root_url
+      redirect_to tasks_url
     else
       flash.now[:danger] ='ログインに失敗しました。'
       render 'new'
@@ -19,18 +19,13 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     flash[:success] = 'ログアウトしました。'
-    redirect_to root_url
+    redirect_to tasks_url
   end
 
 
 
 private
-  def correct_user
-    @task = current_user.tasks.find_by(id:params[:id])
-    unless @task
-    redirect_to root_url
-    end
-  end
+
 
 def login(email,password)
   @user=User.find_by(email: email)
@@ -41,4 +36,7 @@ def login(email,password)
     return false
   end
 end
+
+
+
 end
