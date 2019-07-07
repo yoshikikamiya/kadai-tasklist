@@ -5,7 +5,7 @@ class TasksController < ApplicationController
         if logged_in?
         @task= current_user.tasks.build
         @tasks= current_user.tasks.order(id: :desc).page(params[:page])
-      end
+        end
   end
 
   def show
@@ -21,10 +21,10 @@ class TasksController < ApplicationController
       
       if @task.save
           flash[:success]='タスクが正常に登録されました。'
-          redirect_to users
+          redirect_to tasks_url
       else
           flash.now[:danger]='タスクが正常に登録されませんでした。'
-          render 'users/new'
+          render 'tasks/new'
       end
   end
 
